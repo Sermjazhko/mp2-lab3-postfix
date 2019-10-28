@@ -10,7 +10,7 @@ class TStack
   int size;
   int top;
 public:
-  TStack(int _size)
+  TStack(int _size = 1)
   {
     size = _size;
     top = -1;
@@ -18,10 +18,45 @@ public:
       throw size;
     pMem = new T[size];
   }
+  TStack(const TStack &tmp)
+  {
+    size = tmp.size;
+    top = tmp.top;
+    pMem = new T[size];
+    for (int i = 0; i < size; i++)
+      pMem[i] = tmp.pMem[i];
+  }
   ~TStack()
   {
-    delete [] pMem;
+    delete[] pMem;
+  }
+  void push(T element)
+  {
+    if (full())
+      throw "full";
+    top++;
+    pMem[top] = element;
+  }
+  T pop()
+  {
+    if (empty())
+      throw "empty";
+    top--;
+    return pMem[top + 1];
+  }
+  bool empty()
+  {
+    return top == -1;
+  }
+  bool full()
+  {
+    return top == (size - 1);
+  }
+  T get_element()
+  {
+    return pMem[top];
   }
 };
 
 #endif
+
