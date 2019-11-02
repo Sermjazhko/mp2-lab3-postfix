@@ -17,11 +17,36 @@ TEST(TPostfix, can_get_infix)
   EXPECT_EQ("a-b", pos.GetInfix());
 }
 
-TEST(TPostfix, can_get_postfix)
+TEST(TPostfix, can_get_postfix_1)
 {
   TPostfix pos("a-b");
   EXPECT_EQ("ab-", pos.ToPostfix());
 }
+
+TEST(TPostfix, can_get_postfix_2)
+{
+  TPostfix pos("a+b/c*(d+h)-b");
+  EXPECT_EQ("abc/dh+*+b-", pos.ToPostfix());
+}
+
+TEST(TPostfix, can_get_postfix_3)
+{
+  TPostfix pos("(a+b)*c-d");
+  EXPECT_EQ("ab+c*d-", pos.ToPostfix());
+}
+
+TEST(TPostfix, can_get_postfix_4)
+{
+  TPostfix pos("-(c*d+a)/(b*e)");
+  EXPECT_EQ("cd*a+be*/-", pos.ToPostfix());
+}
+
+TEST(TPostfix, can_get_postfix_5)
+{
+  TPostfix pos("-(b*(d+a))/(c*e)");
+  EXPECT_EQ("bda+*ce*/-", pos.ToPostfix());
+}
+
 
 TEST(TPostfix, can_get_operations)
 {
